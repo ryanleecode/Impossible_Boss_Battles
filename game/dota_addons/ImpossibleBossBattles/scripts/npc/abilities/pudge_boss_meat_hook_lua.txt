@@ -1,0 +1,90 @@
+"pudge_boss_meat_hook_lua"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_lua"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityTextureName"			"pudge_meat_hook"
+	"ScriptFile"					"scripts/vscripts/libraries/abilities/heroes/pudge_boss/pudge_boss_meat_hook_lua.lua"	
+
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
+		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf"
+		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"2500"
+	"AbilityCastPoint"				"0.3"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"5.0"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"hookSpeed"			"1600"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"hookWidth"			"100"
+		}
+		"03"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"hookDistance"		"2500"
+		}
+		"04"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"visionRadius"		"500"
+		}
+		"05"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"visionDuration"	"4.0"
+		}
+		"06"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"hookFollowThroughConstant"			"0.65"
+		}
+		"07"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"hookDamage"		"667.0"
+		}
+	}
+
+	"OnSpellStart"
+	{
+
+	}
+
+	"Modifiers"
+	{
+		
+	}
+}

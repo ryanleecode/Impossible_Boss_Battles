@@ -1,0 +1,214 @@
+"DOTAHeroes"
+{
+	"real_dragon_knight"
+	    {
+	        //General
+	        //----------------------------------------------------------------    
+	        "AbilityLayout"     "6"
+	        "override_hero" "npc_dota_hero_dragon_knight"
+	
+	        "Model"     "models/heroes/dragon_knight/dragon_knight.vmdl"
+	        "Portrait"      "vgui/hud/heroportraits/portrait_dragon_knight"
+	        "SoundSet"      "Hero_DragonKnight"
+	
+	        "ModelScale"        "0.840000"
+	        "HeroGlowColor"     "209 143 71"
+	        "PickSound"     "dragon_knight_drag_spawn_01"
+	        "BanSound"      "dragon_knight_drag_anger_06"
+	        "HeroSelectSoundEffect"     "Hero_DragonKnight.Pick"
+	
+	        //Abiltiies
+	        //----------------------------------------------------------------    
+	        "Ability1"  "dragon_knight_mortal_strike_datadriven"
+	        "Ability2"  "dragon_knight_dragon_call_datadriven"     
+	        "Ability3"  "dragon_knight_dormant_strength_datadriven"    
+	        "Ability4"  "dragon_knight_dragons_blood_datadriven"    
+	        "Ability5"  "dragon_knight_dragon_circle_datadriven"    
+	        "Ability6"  "barebones_empty6"    
+	      
+	        //Stats
+	        //----------------------------------------------------------------    
+	        "ArmorPhysical"     "1"
+	        "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+	        "AttackDamageMin"       "27"
+	        "AttackDamageMax"       "33"
+	        "AttackRate"        "1.700000"
+	        "AttackAnimationPoint"      "0.500000"
+	        "AttackAcquisitionRange"        "600"
+	        "AttackRange"       "128"
+	        "ProjectileSpeed"       "900"
+	        "AttributePrimary"      "DOTA_ATTRIBUTE_STRENGTH"
+	        "AttributeBaseStrength"     "19"
+	        "AttributeStrengthGain"     "2.800000"
+	        "AttributeBaseAgility"      "19"
+	        "AttributeAgilityGain"      "2.200000"
+	        "AttributeBaseIntelligence"     "15"
+	        "AttributeIntelligenceGain"     "1.700000"
+	        "MovementSpeed"     "290"
+	        "MovementTurnRate"      "0.600000"
+	        "BoundsHullName"        "DOTA_HULL_SIZE_HERO"
+	        "HealthBarOffset"       "170"
+	        "precache"
+	        {
+	            "model"     "models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
+	            "particle"      "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf"
+	            "particle"      "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf"
+	            "particle"      "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_frost.vpcf"
+	        }
+	        "particle_folder"       "particles/units/heroes/hero_dragon_knight"
+	        "GameSoundsFile"        "soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
+	        "VoiceFile"     "soundevents/voscripts/game_sounds_vo_dragon_knight.vsndevts"
+	        "RenderablePortrait"
+	        {
+	            "Particles"
+	            {
+	                "particles/units/heroes/hero_dragon_knight/dragon_knight_loadout.vpcf"
+	                {
+	                    "0"
+	                    {
+	                        "type"      "follow_origin"
+	                        "location"      "attach_hitloc"
+	                    }
+	                }
+	            }
+	        }
+	                
+	        "ItemSlots"
+	        {
+	            "0"
+	            {
+	                "SlotIndex"     "0"
+	                "SlotName"      "weapon"
+	                "SlotText"      "#LoadoutSlot_Weapon"
+	                "TextureWidth"      "256"
+	                "TextureHeight"     "256"
+	                "MaxPolygonsLOD0"       "500"
+	                "MaxPolygonsLOD1"       "350"
+	            }
+	            "1"
+	            {
+	                "SlotIndex"     "1"
+	                "SlotName"      "head"
+	                "SlotText"      "#LoadoutSlot_Head_Accessory"
+	                "TextureWidth"      "256"
+	                "TextureHeight"     "256"
+	                "MaxPolygonsLOD0"       "800"
+	                "MaxPolygonsLOD1"       "550"
+	            }
+	            "2"
+	            {
+	                "SlotIndex"     "2"
+	                "SlotName"      "offhand_weapon"
+	                "SlotText"      "#LoadoutSlot_Shield"
+	                "TextureWidth"      "256"
+	                "TextureHeight"     "256"
+	                "MaxPolygonsLOD0"       "400"
+	                "MaxPolygonsLOD1"       "300"
+	            }
+	            "3"
+	            {
+	                "SlotIndex"     "3"
+	                "SlotName"      "back"
+	                "SlotText"      "#LoadoutSlot_Back"
+	                "TextureWidth"      "256"
+	                "TextureHeight"     "256"
+	                "MaxPolygonsLOD0"       "300"
+	                "MaxPolygonsLOD1"       "250"
+	            }
+	            "4"
+	            {
+	                "SlotIndex"     "4"
+	                "SlotName"      "shoulder"
+	                "SlotText"      "#LoadoutSlot_Shoulder"
+	                "TextureWidth"      "256"
+	                "TextureHeight"     "256"
+	                "MaxPolygonsLOD0"       "1000"
+	                "MaxPolygonsLOD1"       "750"
+	            }
+	            "5"
+	            {
+	                "SlotIndex"     "5"
+	                "SlotName"      "arms"
+	                "SlotText"      "#LoadoutSlot_Arms"
+	                "TextureWidth"      "256"
+	                "TextureHeight"     "128"
+	                "MaxPolygonsLOD0"       "400"
+	                "MaxPolygonsLOD1"       "300"
+	            }
+	            "6"
+	            {
+	                "SlotIndex"     "6"
+	                "SlotName"      "shapeshift"
+	                "SlotText"      "#LoadoutSlot_Elder_Dragon"
+	                "no_import"     "1"
+	                "TextureWidth"      "512"
+	                "TextureHeight"     "512"
+	                "MaxPolygonsLOD0"       "6000"
+	                "MaxPolygonsLOD1"       "4000"
+	                "LoadoutPreviewMode"        "transformation"
+	            }
+	            "7"
+	            {
+	                "SlotIndex"     "7"
+	                "SlotName"      "taunt"
+	                "SlotText"      "#LoadoutSlot_Taunt"
+	            }
+	        }
+	    }
+	"npc_dota_hero_ancient_apparition_barebones"
+	  {
+	    "AbilityLayout"     "6"
+	    "override_hero"     ""
+	    "SoundSet"          "0" 
+	    "Ability1"        "radiusHundred" 
+	    "Ability2"        "radiusTwoHundred" 
+	    "Ability3"        "radiusThreeHundred" 
+	    "Ability4"        "radiusFourHundred"
+	    "Ability5"        "radiusFiveHundred"
+	    "Ability6"        "radiusOneThousandTwoHundred"
+	    "Ability7"        ""
+	    "Ability8"        ""
+	    "Ability9"        ""
+	    "Ability10"       ""
+	    "Ability11"       ""
+	    "Ability12"       ""
+	    "Ability13"       ""
+	    "Ability14"       ""
+	    "Ability15"       ""
+	    "Ability16"       ""
+	
+	    "ArmorPhysical"       "0"                 // Physical protection.
+	    "MagicalResistance"       "0"                 // Magical protection (percentage).
+	
+	    "AttackCapabilities"    "DOTA_UNIT_CAP_NO_ATTACK"
+	    "AttackDamageMin"     "1"                   // Damage range min.
+	    "AttackDamageMax"     "1"                   // Damage range max.
+	
+	    //"AttributePrimary"      "DOTA_ATTRIBUTE_STRENGTH"
+	    "AttributeBaseStrength"   "0"                   // Base strength
+	    "AttributeStrengthGain"   "0"                   // Strength bonus per level.
+	    "AttributeBaseIntelligence" "0"                   // Base intelligence
+	    "AttributeIntelligenceGain" "0"                   // Intelligence bonus per level.
+	    "AttributeBaseAgility"    "0"                   // Base agility
+	    "AttributeAgilityGain"    "0"                   // Agility bonus per level.
+	
+	    "BountyXP"          "0"                 // Experience earn.
+	    "BountyGoldMin"       "0"                   // Gold earned min.
+	    "BountyGoldMax"       "0"                   // Gold earned max.
+	
+	    //"BoundsHullName"      "DOTA_HULL_SIZE_HERO"
+	    //"RingRadius"        "70"
+	
+	    "MovementCapabilities"    "DOTA_UNIT_CAP_MOVE_GROUND"
+	    "MovementSpeed"       "360"                 // Speed.
+	    "MovementTurnRate"      "1.0"                 // Turning rate.
+	
+	    "StatusHealth"        "1000"                 // Base health.
+	    "StatusHealthRegen"     "0.0"                 // Health regeneration rate.
+	    "StatusMana"        "400"                   // Base mana.
+	    "StatusManaRegen"     "100.0"                 // Mana regeneration rate.
+	
+	    "VisionDaytimeRange"    "1800"                  // Range of vision at night time.
+	    "VisionNighttimeRange"    "1800"                  // Range of vision at night time.
+	  }
+}

@@ -1,0 +1,135 @@
+"item_wyrm_blade_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"ID"							"2250"
+	"BaseClass"						"item_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_diffusal_blade"
+	"MaxUpgradeLevel" 				"1" 
+	"ItemBaseLevel" 				"1" 
+
+
+	//Rules
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost" 						"0"
+	"ItemKillable" 					"0" 
+	"ItemSellable" 					"0"
+	"ItemPurchasable" 				"0"
+	"ItemDroppable" 				"0"
+	"ItemShareability" 				"ITEM_NOT_SHAREABLE"
+
+	//Stock
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemStockMax" 					"0" 
+	"ItemStockTime" 				"0"
+	"ItemStockInitial" 				"0"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+
+	}
+
+	//Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityChannelTime"			"3"
+	"AbilityCastAnimation" 			"ACT_DOTA_TELEPORT"
+	"AnimationPlaybackRate" 		"0.01"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+
+	"AbilityCastPoint"				"0.01"
+	"AbilityCooldown"				"0"
+	"AbilityManaCost"				"0"
+
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"strBonus"		"1"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"unsheathedBonus"	"40"
+		}	
+	}
+
+	"OnChannelSucceeded"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifiers_unsteathed"
+			"Target" 		"CASTER"
+		}
+
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/libraries/items/wyrm_blade.lua"
+			"Function"		"test"
+		}
+	}
+
+	"OnOwnerDied"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/libraries/items/wyrm_blade.lua"
+			"Function"			"wyrm_blade"
+			"strengthBonus"		"%strBonus"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifiers_unsteathed"
+			"Target" 		"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifiers_wyrm_blade"
+		{
+			"Passive"	"1"
+			"IsHidden"	"0
+			"
+
+			"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%strBonus"
+			}
+
+		}
+
+		"modifiers_unsteathed"
+		{
+			"IsHidden"			"0"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%unsheathedBonus"
+			}
+		}
+	}
+}

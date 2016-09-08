@@ -1,0 +1,90 @@
+"dragon_knight_mortal_strike_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityTextureName"			"skeleton_king_mortal_strike"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+
+	}
+
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"150"
+	"AbilityCastPoint"				"0.5"
+	"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
+	"AnimationPlaybackRate" 		"1.0"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"10.0"
+	"AbilityDuration"				"0.1"
+	
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"10.0"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"0.1"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damageMultiplier"		"0.025 0.05 0.075 0.1"	
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_dragon_knight_mortal_strike_datadriven"
+		{
+			"Passive"		"1"
+			"IsHidden"		"1"
+
+			"Orb"
+			{
+				"Priority"		"DOTA_ORB_PRIORITY_ABILITY"
+				"CastAttack"	"1"
+			}
+
+			"OnOrbFire"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"libraries/abilities/heroes/dragon_knight/mortal_strike.lua"
+					"Function"			"checkCooldown"
+				}
+			}
+
+			"OnOrbImpact"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"libraries/abilities/heroes/dragon_knight/mortal_strike.lua"
+					"Function"		"dragon_knight_mortal_strike"
+					"modifier"		"modifier_silence"
+				}
+			}
+		}
+	}
+}

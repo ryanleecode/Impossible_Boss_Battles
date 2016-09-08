@@ -1,0 +1,87 @@
+"pudge_boss_death_grip_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ILLUSION"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityTextureName"			""
+
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"					"particles/pudge_boss/pudge_boss_death_grip_circle.vpcf"
+		"particle"					"particles/pudge_boss/pudge_boss_death_grip_raze.vpcf"
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0"
+	"AbilityChannelTime" 			"0.8"
+	"AbilityCastAnimation" 			"ACT_DOTA_TELEPORT_END"
+	"AnimationPlaybackRate" 		"0.5"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"10.0"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					""
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"outerRadius"			"980"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"numberOfCircles"		"42" 
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"150"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage"				"150"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"cooldown"				"10.0"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"libraries/abilities/heroes/pudge_boss/pudge_boss_death_grip.lua"
+			"Function"		"pudge_boss_death_grip"
+		}
+	}
+
+	"Modifiers"
+	{
+		
+	}
+}

@@ -1,0 +1,144 @@
+"pudge_boss_necro_death_grip_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityTextureName"			""
+
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"					"particles/pudge_boss/pudge_boss_necro_deathgrip_grip.vpcf"
+		"particle"					"particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+		"particle"					"particles/units/heroes/hero_undying/undying_soul_rip_heal.vpcf"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1000"
+	"AbilityCastPoint"				"0"
+	"AbilityCastAnimation" 			"ACT_DOTA_VICTORY"
+	"AnimationPlaybackRate" 		"2.2"
+	"AbilityChannelTime"			"5.0"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"0"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					""
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				""
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"manaDrain"					"0.005"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"duration"					"5.00"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"thinkInterval"				"0.25"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonusRange"				"150"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"libraries/abilities/heroes/pudge_boss/pudge_boss_necro_death_grip.lua"
+			"Function"		"pudge_boss_necro_death_grip_init"
+		}
+	}
+
+	"OnChannelFinish"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_death_grip_caster_datadriven"
+			"Target" 		"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"libraries/abilities/heroes/pudge_boss/pudge_boss_necro_death_grip.lua"
+			"Function"		"killCaster"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_death_grip_caster_datadriven"
+		{
+			"IsHidden"			"1"
+
+			"ThinkInterval"	"%thinkInterval"
+
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"libraries/abilities/heroes/pudge_boss/pudge_boss_necro_death_grip.lua"
+					"Function"		"pudge_boss_necro_death_grip"
+					"Target"		"TARGET"
+				}
+			}
+
+		}
+
+		"modifier_death_grip_datadriven"
+		{
+			"IsDebuff"			"1"
+			"IsPurgable"		"1"
+
+			"OverrideAnimation" "ACT_DOTA_FLAIL"
+
+			"EffectName"			"particles/pudge_boss/pudge_boss_necro_deathgrip_grip.vpcf"
+			"EffectAttachType"		"attach_origin"
+
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Bane.FiendsGrip"
+					"Target"		"TARGET"
+				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonusRange"
+			}
+		}
+	}
+}

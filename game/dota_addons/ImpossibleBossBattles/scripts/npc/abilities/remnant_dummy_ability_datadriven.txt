@@ -1,0 +1,9 @@
+"remnant_dummy_ability_datadriven" 
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"     			"DOTA_ABILITY_BEHAVIOR_HIDDEN"
+    "AbilityTextureName"            "rubick_empty1"
+    "MaxLevel"                      "1"
+}

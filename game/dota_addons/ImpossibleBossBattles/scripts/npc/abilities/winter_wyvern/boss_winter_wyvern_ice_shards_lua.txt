@@ -1,0 +1,94 @@
+"boss_winter_wyvern_ice_shards_lua"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_lua"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"AbilityTextureName"			"tusk_ice_shards"
+	"ScriptFile"					"scripts/vscripts/libraries/abilities/heroes/winter_wyvern_boss/boss_winter_wyvern_ice_shards_lua.lua"
+
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"					"particles/units/heroes/hero_tusk/tusk_ice_shards.vpcf"
+		"particle"					"particles/econ/items/tuskarr/tusk_ti5_immortal/tusk_ice_shards_projectile_stout.vpcf"
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tusk.vsndevts"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"0"
+	"AbilityCastPoint"				"0.01"
+	"AbilityChannelTime"  			"0.8"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"0"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					""
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"shardSpeed"				"1200.0"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"maximumDistance"			"2100"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"projectileRadius"			"96"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"visionRadius"				"300"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"shardRadius"				"200"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"shardAngleStep"			"40.0"
+		}
+
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"shardCount"				"7" //must be an odd number
+		}
+		"08"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"shardDuration"				"7.0"
+		}
+		"09"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"shardDamage"				"300"
+		}
+		"10"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"numOfProjectiles"			"12"
+		}
+	}
+}

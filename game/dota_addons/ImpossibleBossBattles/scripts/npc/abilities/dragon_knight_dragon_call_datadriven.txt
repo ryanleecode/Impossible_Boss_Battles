@@ -1,0 +1,163 @@
+"dragon_knight_dragon_call_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"axe_berserkers_call"
+
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/voscripts/game_sounds_vo_dragon_knight.vsndevts"
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
+		"particle"			"particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
+		"particle"			"particles/status_fx/status_effect_beserkers_call.vpcf"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"%radius"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+	"AnimationPlaybackRate" 		"1.0"
+	"AOERadius"						"%radius"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"12.0"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"400"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"3.2"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"dragon_knight_drag_anger_03"
+			"Target" 		"CASTER"	
+		}
+
+	}
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Axe.Berserkers_Call"
+			"Target" 		"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"libraries/abilities/heroes/dragon_knight/dragon_call.lua"
+			"Function"		"dragon_call"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_dragons_call_caster_datadriven"
+			"Target" 		"CASTER"
+			"Duration"		"%duration"
+		}
+
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"  	"CASTER"
+				"Radius" 	"%radius"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Flags"     "DOTA_UNIT_TARGET_FLAG_NONE"
+			}
+		
+			"Action"    
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_dragons_call_enemy_datadriven"
+					"Target" 		"TARGET"
+				}
+			}
+		}
+
+	}
+
+	"Modifiers"
+	{
+		"modifier_dragons_call_caster_datadriven"
+		{
+			"IsPurgable"		"0"
+			"IsBuff"			"1"
+			"IsHidden"			"1"
+	
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target"			"CASTER"
+					"EffectName"        "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
+					"EffectAttachType" 	"follow_origin"
+					"ControlPoints"
+					{
+						"02"		"%radius 1 1"	//Required for Rampant Outrage (axe immortal)
+					}
+					"ControlPointEntities"
+					{
+						"CASTER"	"follow_origin"
+						"CASTER"	"follow_origin"
+						"CASTER"	"follow_origin"
+					}
+				}
+			}
+		}
+
+		"modifier_dragons_call_enemy_datadriven"
+		{
+			"IsPurgable"		"0"
+			"IsDebuff"			"1"
+			"Duration"			"0.5"
+
+			"StatusEffectName" 		"particles/status_fx/status_effect_beserkers_call.vpcf" 	   
+			"StatusEffectPriority"  "10"
+
+			"ThinkInterval"  "0.25"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"libraries/abilities/heroes/dragon_knight/dragon_call.lua"
+					"Function"		"resetParticle"
+					"modifier"		"modifier_dragons_call_enemy_datadriven"
+				}
+			}
+		}
+	}
+}

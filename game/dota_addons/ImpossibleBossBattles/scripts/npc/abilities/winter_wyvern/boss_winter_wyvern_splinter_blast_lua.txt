@@ -1,0 +1,99 @@
+"boss_winter_wyvern_splinter_blast_lua"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_lua"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"AbilityTextureName"			"winter_wyvern_splinter_blast"
+	"ScriptFile"					"scripts/vscripts/libraries/abilities/heroes/winter_wyvern_boss/boss_winter_wyvern_splinter_blast_lua.lua"
+
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"					"particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast.vpcf"
+		"particle"					"particles/units/heroes/hero_winter_wyvern/wyvern_splinter.vpcf"
+		"particle"					"particles/custom/boss_winter_wyvern_ice_wall_snow_ground.vpcf"
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_winter_wyvern.vsndevts"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"0"
+	"AbilityCastPoint"				"0.01"
+	"AbilityChannelTime"  			"0.8"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"0"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					""
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"quantity"				"8"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"1200"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"blastSpeed"			"1.25"			//in seconds
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"impactRadius"			"150"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"splinterRadius"		"400"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"splinterQuantity"		"5"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"splinterImpactRadius"	"100"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"blastDamage" 			"225"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"splinterDamage"		"300"
+		}
+		"10"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"splinterSpeed"			"1.00"			//in seconds
+		}
+		"11"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"secondSplinterDamage"	"375"
+		}
+	}
+}

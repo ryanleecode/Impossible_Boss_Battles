@@ -1,0 +1,74 @@
+"boss_winter_wyvern_sigil_chilling_touch_lua"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_lua"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityTextureName"			"ancient_apparition_chilling_touch"
+	"ScriptFile"					"scripts/vscripts/libraries/abilities/heroes/winter_wyvern_boss/boss_winter_wyvern_sigil_chilling_touch_lua.lua"
+
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle" 					"particles/units/heroes/hero_lich/lich_base_attack.vpcf"
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+		"soundfile"					"soundevents/game_sounds.vsndevts"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"0"
+	"AbilityCastPoint"				"0.0"
+	"AOERadius"						"%iRadius"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"0.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0.0"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"iRadius"				"425"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"iSpeed"				"900"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"iDamage"				"150"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"iWidth"				"4"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"iNumber"				"3"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"iFrames"				"4"				// How many frames earlier should the projectile particle expire
+		}
+	}
+
+}

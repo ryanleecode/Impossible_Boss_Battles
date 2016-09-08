@@ -1,0 +1,48 @@
+"earth_spirit_boss_stone_caller_datadriven"
+  {
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "BaseClass"             "ability_datadriven"
+    "AbilityTextureName"    "earth_spirit_stone_caller"   
+
+    // Stats
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"        "0.0"
+    "AbilityCastPoint"        "0.0"
+    "AbilityCooldown"         "0.0"
+    "AbilityCastAnimation"    "ACT_DOTA_CAST_ABILITY_4"
+    "AbilityManaCost"         "50"
+
+    "precache"
+    {
+    }
+
+    // Stats
+    //-------------------------------------------------------------------------------------------------------------
+    "OnSpellStart"
+    {
+      "RunScript" 
+      {
+        "Scriptfile"    "libraries/abilities/earth_spirit_boss_stone_caller.lua"
+        "Function"      "spawn_stone_remnants"
+      }
+    }
+  
+    
+    // Special  
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+      "01"
+      {
+        "var_type"        "FIELD_INTEGER"
+        "quantity"        "3 4 5"
+      }  
+      "02"
+      {
+        "var_type"        "FIELD_INTEGER"
+        "duration"        "10 15 20"
+      }
+    }
+  }

@@ -1,0 +1,678 @@
+"DOTAUnits"
+{
+	//=================================================================================
+	// Boss: Template
+	//=================================================================================
+	"boss"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"                                 "npc_dota_creature"
+		"UnitLabel" 								""
+		"Level"										"1"
+		"AttacksEnabled"							"ground,air"
+	
+		//Graphics
+		//----------------------------------------------------------------
+		"Model"                                     ""      
+		"ModelScale"                                "1.000000"      
+		"Portrait"                                  ""
+		"IdleExpression"                            ""
+		"HealthBarOffset"                           "190"
+		"RingRadius"                                "70"
+	
+		//Sound
+		//----------------------------------------------------------------
+		"SoundSet"                                      ""
+		"IdleSoundLoop"                                 ""
+		"HeroSelectSoundEffect"                         ""
+		"GameSoundsFile"								""
+		"VoiceFile"										""
+	
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"                                      ""
+		"Ability2"                                      ""
+		"Ability3"                                      ""
+		"Ability4"                                      ""
+	
+		//Defense
+		//----------------------------------------------------------------
+		"CombatClassDefend"                     "DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"ArmorPhysical"                         "0"
+		"MagicalResistance"                     "0"
+	
+		//Attack
+		//----------------------------------------------------------------
+		"CombatClassAttack"                     "DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"AttackCapabilities"                    "DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"						"DAMAGE_TYPE_ArmorPhysical"
+		"AttackDamageMin"                       "0"
+		"AttackDamageMax"                       "0"
+		"AttackRate"                            "1.700000"
+		"AttackAnimationPoint"                  "0.250000"
+		"AttackAcquisitionRange"                "1200"
+		"AttackRange"                           "600"
+		"ProjectileModel"                       ""
+		"ProjectileSpeed"                       "700"
+		"AutoAttacksByDefault"          		"0"
+	
+		// Attributes
+		//---------------------------------------------------------------
+		"AttributePrimary"                      "DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"                 "0"
+		"AttributeStrengthGain"                 "0.000000"
+		"AttributeBaseIntelligence"             "0"
+		"AttributeIntelligenceGain"             "0.000000"
+		"AttributeBaseAgility"                  "0"
+		"AttributeAgilityGain"                  "0.000000"
+	
+		//Movement and Collision
+		//---------------------------------------------------------------
+		"MovementCapabilities"                  "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"                         "300"
+		"MovementTurnRate"                      "0.400000"
+		"BoundsHullName"                        "DOTA_HULL_SIZE_HERO"
+		"HasAggressiveStance"                   "0"             // Plays alternate idle/run animation when near enemies
+		"FollowRange"                           "100"           // Distance to keep when following
+	
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                              "0"                   
+		"BountyGoldMin"                         "0"             
+		"BountyGoldMax"                         "0"     
+	
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"          "1000"
+		"StatusHealthRegen"     "0.0"
+		"StatusMana"            "0"
+		"StatusManaRegen"       "0.0" 
+		"StatusStartingMana"	"0" 
+	
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"    "1200"
+		"VisionNighttimeRange"  "800"          
+	
+		//Creature
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"       "1"
+			"AttachWearables"
+			{
+				"Wearable1" { "ItemDef" "" }
+			}
+		}
+	}
+	
+	//=================================================================================
+	// Boss: Winter Wyvern
+	//=================================================================================
+	"boss_winter_wyvern"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"                                 "npc_dota_creature"
+		"UnitLabel" 								"boss_winter_wyvern"
+		"Level"										"1"
+		"AttacksEnabled"							"ground,air"
+		"Debug"										"1"
+	
+		//Graphics
+		//----------------------------------------------------------------
+		"Model"                                     "models/heroes/winterwyvern/winterwyvern.vmdl"      
+		"ModelScale"                                "1.000000"      
+		"Portrait"                                  ""
+		"IdleExpression"                            "scenes/winter_wyvern/winter_wyvern_exp_idle_01.vcd"
+		"HealthBarOffset"                           "190"
+		"RingRadius"                                "70"
+	
+		//Sound
+		//----------------------------------------------------------------
+		"SoundSet"                                      "Hero_Winter_Wyvern"
+		"IdleSoundLoop"                                 "Hero_Winter_Wyvern.IdleLoop"
+		"HeroSelectSoundEffect"                         "Hero_Winter_Wyvern.Pick"
+		"GameSoundsFile"								"soundevents/game_sounds_heroes/game_sounds_winter_wyvern.vsndevts"
+		"VoiceFile"										"soundevents/voscripts/game_sounds_vo_winter_wyvern.vsndevts"
+	
+		// Abilities
+		//----------------------------------------------------------------
+		"AbilityLayout"              					"6"													
+		"Ability1"                                    	"boss_winter_wyvern_frozen_sigil_lua"
+		"Ability2"                                      "boss_winter_wyvern_splinter_blast_lua"
+		"Ability3"                                      "boss_winter_wyvern_ice_shards_lua"
+		"Ability4"                                     	"boss_winter_wyvern_ice_blast_lua"
+		"Ability5"             							"boss_winter_wyvern_ice_spirits_lua"
+		"Ability6"                                      ""
+	
+		//Defense
+		//----------------------------------------------------------------
+		"CombatClassDefend"                     "DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"ArmorPhysical"                         "0"
+		"MagicalResistance"                     "0"
+	
+		//Attack
+		//----------------------------------------------------------------
+		"ArtilleryAttack"						"1"
+		"SplashAttack"							"1"
+		"SplashFullRadius"						"25"
+		"SplashMediumRadius"					"50"
+		"SplashMediumDamage"					"0.4" //65%
+		"SplashSmallRadius"						"100"
+		"SplashSmallDamage"						"0.25"
+		"ArtilleryImpactProjectile"				"particles/econ/items/crystal_maiden/crystal_maiden_maiden_of_icewrack/cm_arcana_pup_flee_vapor.vpcf" 
+		"UnitImpactParticle"					"particles/units/heroes/hero_winter_wyvern/winter_wyvern_base_attack_explosion.vpcf" 
+	
+		"CombatClassAttack"                     "DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"AttackCapabilities"                    "DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"						"DAMAGE_TYPE_ArmorPhysical"
+		"AttackDamageMin"                       "120"
+		"AttackDamageMax"                       "130"
+		"AttackRate"                            "1.100000"
+		"AttackAnimationPoint"                  "0.250000"
+		"AttackAcquisitionRange"                "1800"
+		"AttackRange"                           "1200"
+		"ProjectileModel"                       "particles/custom/winter_wyvern_base_attack.vpcf"
+		"ProjectileSpeed"                       "1200"
+		"AutoAttacksByDefault"          		"0"
+	
+		// Attributes
+		//---------------------------------------------------------------
+		"AttributePrimary"                      "DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"                 "0"
+		"AttributeStrengthGain"                 "0.000000"
+		"AttributeBaseIntelligence"             "0"
+		"AttributeIntelligenceGain"             "0.000000"
+		"AttributeBaseAgility"                  "0"
+		"AttributeAgilityGain"                  "0.000000"
+	
+		//Movement and Collision
+		//---------------------------------------------------------------
+		"MovementCapabilities"                  "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"                         "300"
+		"MovementTurnRate"                      "0.400000"
+		"BoundsHullName"                        "DOTA_HULL_SIZE_HERO"
+		"HasAggressiveStance"                   "0"             // Plays alternate idle/run animation when near enemies
+		"FollowRange"                           "100"           // Distance to keep when following
+	
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                              "0"                   
+		"BountyGoldMin"                         "0"             
+		"BountyGoldMax"                         "0"     
+	
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"          "1000"
+		"StatusHealthRegen"     "0.0"
+		"StatusMana"            "0"
+		"StatusManaRegen"       "0.0" 
+		"StatusStartingMana"	"0" 
+	
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"    "1200"
+		"VisionNighttimeRange"  "800"          
+	
+		//Creature
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"       "1"
+			"AttachWearables"
+			{
+				"Wearable1" { "ItemDef" "7291" }
+				"Wearable2" { "ItemDef" "7292" }
+			}
+		}
+	}
+	
+	//=================================================================================
+	// Boss Unit: Frozen Sigil
+	//=================================================================================
+	"summon_frozen_sigil"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"                                 "npc_dota_creature"
+		"UnitLabel"                                 "boss_winter_wyvern_frozen_sigil"
+		"SelectionGroup"							"Winter_Wyvern_Frozen_Sigils"					// Units with the same selection group will cycle together when tabbing through owned units
+		"vscripts"									"libraries/AI/frozenSigilAi.lua"
+	
+	
+		//Graphics
+		//----------------------------------------------------------------
+		"Model"                                     "models/heroes/tuskarr/tuskarr_sigil.vmdl"      
+		"ModelScale"                                "1.0"
+		"RingRadius"                                "24"
+	
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"                                      "boss_winter_wyvern_sigil_chilling_touch_lua"
+		"Ability2"                                      ""
+		"Ability3"                                      ""
+		"Ability4"                                      ""
+	
+		//Defense
+		//----------------------------------------------------------------
+		"CombatClassDefend"                     "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"ArmorPhysical"                         "0"
+		"MagicalResistance"                     "0"
+	
+		//Attack
+		//----------------------------------------------------------------
+		"CombatClassAttack"                     "DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"AttackCapabilities"                    "DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"                       "0"
+		"AttackDamageMax"                       "1"
+		"AttackRate"                            "1.700000"
+		"AttackAnimationPoint"                  ""
+		"AttackAcquisitionRange"                "800"
+		"AttackRange"                           "550"
+		"ProjectileModel"                       ""
+		"ProjectileSpeed"                       ""
+	
+		// Attributes
+		//---------------------------------------------------------------
+		"AttributePrimary"                      "DOTA_ATTRIBUTE_INTELLECT"
+		"AttributeBaseStrength"                 "16"
+		"AttributeStrengthGain"                 "2.000000"
+		"AttributeBaseIntelligence"             "22"
+		"AttributeIntelligenceGain"             "2.500000"
+		"AttributeBaseAgility"                  "15"
+		"AttributeAgilityGain"                  "1.700000"
+	
+		//Movement and Collision
+		//---------------------------------------------------------------
+		"MovementCapabilities"                  "DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementSpeed"                         "315"
+		"MovementTurnRate"                      "0.500000"
+		"HasAggressiveStance"                   "0"             // Plays alternate idle/run animation when near enemies
+		"FollowRange"                           "250"           // Distance to keep when following
+	
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                              "0"                   
+		"BountyGoldMin"                         "0"             
+		"BountyGoldMax"                         "0"     
+	
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"          "16"
+		"StatusHealthRegen"     "0.00"
+		"StatusMana"            "0"
+		"StatusManaRegen"       "0" 
+		"StatusStartingMana"	"0" 
+	
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"    "400"
+		"VisionNighttimeRange"  "400"          
+	
+		//Creature
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"       "1"
+			"AttachWearables"
+			{
+			}
+		}
+	}
+	
+	//=================================================================================
+	// Boss: Pudge
+	//=================================================================================
+	"boss_pudge"
+	{
+		// General
+		"BaseClass"             		"npc_dota_creature" 			// Class of entity of link to.
+		"Model"                 		"models/heroes/pudge/pudge.vmdl"   // Model.
+		"ModelScale"    				"1.5"
+		"Level"                         	"1"
+		"IsAncient"                     	"0"
+		"IsNeutralUnitType"             	"0"
+		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
+		"SelectOnSpawn"                 	"0"
+		"CanBeDominated"                        "0"
+		"IgnoreAddSummonedToSelection" 		"1"
+		"AutoAttacksByDefault"          	"1"
+		"UnitLabel"							"pudgeBoss"
+		"ConsideredHero"					"0"
+	
+		//vscript
+		//--
+		"vscripts"                    		"libraries/AI/pudgeBossAi.lua"
+	
+		//Sound
+		//----------------------------------------------------------------
+		"SoundSet"              	"Hero_Pudge" // Name of sound set.
+		"GameSoundsFile"		"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+		"VoiceFile"			"soundevents/voscripts/game_sounds_vo_pudge.vsndevts"
+		"VoiceBackgroundSound"		"Pudge.Background"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"                                      "pudge_boss_fart_jump_datadriven"                      // Ability 1.
+		"Ability2"                                      "pudge_boss_death_grip_datadriven"                      // Ability 2.
+		"Ability3"                                      "pudge_boss_meat_hook_lua"                      // Ability 3.
+		"Ability4"                                      ""                      // Ability 4.
+		"Ability5"                                      ""                      // Ability 5.
+		"Ability6"                                      ""                      // Ability 6 - Extra.
+		"Ability7"                                      ""                      // Ability 7 - Extra.
+		"Ability8"                                      ""                      // Ability 8 - Extra.
+	
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"                         "0"                     // Physical protection.
+		"MagicalResistance"                     "0"                     // Magical protection.
+	
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"            	"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"                       "250"                     // Damage range min.
+		"AttackDamageMax"                       "250"                     // Damage range max.
+		"AttackDamageType"                      "DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"                            "0.25"           // Speed of attack.
+		"AttackAnimationPoint"          	"0.5"          // Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"       		"10000"           // Range within a target can be acquired.
+		"AttackRange"                           "184"           // Range within a target can be attacked.
+		"AttackRangeBuffer"                     "250"           // Extra attack range within which the target can move without canceling the attack
+		"ProjectileModel"                       "" // Particle system model for projectile.
+		"ProjectileSpeed"                       "900"           // Speed of projectile.	
+	
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"                      "DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"         "0"                     // Base strength
+		"AttributeStrengthGain"         "0"                     // Strength bonus per level.
+		"AttributeBaseIntelligence"     "0"                     // Base intelligence
+		"AttributeIntelligenceGain"     "0"                     // Intelligence bonus per level.
+		"AttributeBaseAgility"          "0"                     // Base agility
+		"AttributeAgilityGain"          "0"                     // Agility bonus per level.
+	
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                                      "0"                     // Experience earn.
+		"BountyGoldMin"                         "0"                     // Gold earned min.
+		"BountyGoldMax"                         "0"                     // Gold earned max.
+	
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"                        "DOTA_HULL_SIZE_HUGE"
+		"RingRadius"                            "128"
+		"HealthBarOffset"                       "300"            // -1 means use the models
+	
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"          "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"                         "420"           // Speed
+		"MovementTurnRate"                      "1"           // Turning rate.
+		"HasAggressiveStance"           	"0"             // Plays alternate idle/run animation when near enemies
+		"FollowRange"                           "100"           // Distance to keep when following
+	
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"                          "19000"		// Base health.
+		"StatusHealthRegen"                     "0" 		// Health regeneration rate.
+		"StatusMana"                            "1000" 		// Base mana.
+		"StatusManaRegen"                       "0" 		// Mana regeneration rate.
+		"StatusStartingMana"            		"0" 		// -1 means default to full mana
+	
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"                      "DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"             "DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"             "DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"         "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"            "1200"           // Range of vision during day light.
+		"VisionNighttimeRange"          "1200"           // Range of vision at night time.
+		
+		// Bots
+		//----------------------------------------------------------------
+		"AttackDesire"                          "1.0"           // How much bots want to attack them vs other non-hero things
+	
+		//Inventory
+		"HasInventory"                          "0"
+		
+		"WakesNeutrals"                         "1"
+	
+		"IdleSoundLoop"                         "Hero_Pudge.IdleLoop"
+	
+		//Creature
+		//----------------------------------------------------------------
+		"Creature"
+	    	{
+			"AttachWearables"
+			{
+				"Wearable1"	{ "ItemDef" "6007" } 	// Murder Mask
+				"Wearable2"	{ "ItemDef" "6115" } 	// Pauldron Perch
+				"Wearable3"	{ "ItemDef" "6202" }	// Gauntlet of Dark Feathers
+				"Wearable4"	{ "ItemDef" "6203" }	// Armor of the Black Bird
+				"Wearable5"	{ "ItemDef" "6204" }	// Dendi Doll
+				"Wearable6"	{ "ItemDef" "6212" }	// The Crow Eater
+				"Wearable7"	{ "ItemDef" "5347" }	// Whalehook	
+			}
+		}
+	} 
+	
+	//=================================================================================
+	// Boss Unit: Necro Gripper
+	//=================================================================================
+	"summon_necro_gripper"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"                                 "npc_dota_creature"
+	
+		//Graphics
+		//----------------------------------------------------------------
+		"Model"                                     "models/heroes/necrolyte/necrolyte.vmdl"      
+		"ModelScale"                                "0.53"      
+		"Portrait"                                  "vgui/hud/heroportraits/portrait_necrolyte"
+		"IdleExpression"                            "scenes/necrolyte/necrolyte_exp_idle_01.vcd"
+		"HealthBarOffset"                           "160"
+		"RingRadius"                                "47"
+	
+		//Sound
+		//----------------------------------------------------------------
+		"SoundSet"                                      "Hero_Necrolyte"
+		"IdleSoundLoop"                                 "Hero_Necrolyte.IdleLoop"
+		"HeroSelectSoundEffect"                         "Hero_Necrolyte.Pick"
+	
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"                                      "pudge_boss_necro_death_grip_datadriven"
+		"Ability2"                                      "barebones_empty2"
+		"Ability3"                                      "barebones_empty3"
+		"Ability4"                                      "barebones_empty4"
+	
+		//Defense
+		//----------------------------------------------------------------
+		"CombatClassDefend"                     "DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"ArmorPhysical"                         "0"
+		"MagicalResistance"                     "0"
+	
+		//Attack
+		//----------------------------------------------------------------
+		"CombatClassAttack"                     "DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"AttackCapabilities"                    "DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"                       "0"
+		"AttackDamageMax"                       "1"
+		"AttackRate"                            "1.700000"
+		"AttackAnimationPoint"                  "0"
+		"AttackAcquisitionRange"                "800"
+		"AttackRange"                           "550"
+		"ProjectileModel"                       "particles/units/heroes/hero_necrolyte/necrolyte_base_attack.vpcf"
+		"ProjectileSpeed"                       "900"
+	
+		// Attributes
+		//---------------------------------------------------------------
+		"AttributePrimary"                      "DOTA_ATTRIBUTE_INTELLECT"
+		"AttributeBaseStrength"                 "16"
+		"AttributeStrengthGain"                 "2.000000"
+		"AttributeBaseIntelligence"             "22"
+		"AttributeIntelligenceGain"             "2.500000"
+		"AttributeBaseAgility"                  "15"
+		"AttributeAgilityGain"                  "1.700000"
+	
+		//Movement and Collision
+		//---------------------------------------------------------------
+		"MovementCapabilities"                  "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"                         "522"
+		"MovementTurnRate"                      "1"
+		"BoundsHullName"                        "DOTA_HULL_SIZE_SMALL"
+		"HasAggressiveStance"                   "0"             // Plays alternate idle/run animation when near enemies
+		"FollowRange"                           "100"           // Distance to keep when following
+	
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                              "0"                   
+		"BountyGoldMin"                         "0"             
+		"BountyGoldMax"                         "0"     
+	
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"          "100"
+		"StatusHealthRegen"     "0"
+		"StatusMana"            "1000000"
+		"StatusManaRegen"       "0" 
+		"StatusStartingMana"	"0" 
+	
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"    "1200"
+		"VisionNighttimeRange"  "800"          
+	
+		//Creature
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"       "0"
+			"AttachWearables"
+			{
+				"Wearable1" { "ItemDef" "6377" }  //Robe of the Heretic
+				"Wearable2" { "ItemDef" "6378" }  //Hood of the Heretic
+				"Wearable3" { "ItemDef" "6379" }  //Scythe of the Heretic
+				"Wearable4" { "ItemDef" "6380" }  //Mantle of the Heretic
+			}
+		}
+	}
+	"npc_dummy_unit"
+	{
+	    "BaseClass"                 "npc_dota_creature"
+	    "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+	    "VisionDaytimeRange"        "0" 
+	    "VisionNighttimeRange"      "0"
+	    "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+	    "AbilityLayout"             "4"
+	    "Ability1"                  "dummy_passive"
+	}
+	"unit_template"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"                                 "npc_dota_creature"
+		"UnitLabel"                                 ""
+	
+	
+		//Graphics
+		//----------------------------------------------------------------
+		"Model"                                     ""      
+		"ModelScale"                                ""      
+		"Portrait"                                  ""
+		"IdleExpression"                            ""
+		"HealthBarOffset"                           ""
+		"RingRadius"                                "48"
+	
+		//Sound
+		//----------------------------------------------------------------
+		"SoundSet"                                      ""
+		"IdleSoundLoop"                                 ""
+		"HeroSelectSoundEffect"                         ""
+		"GameSoundsFile"								""
+		"VoiceFile"										""
+	
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"                                      ""
+		"Ability2"                                      ""
+		"Ability3"                                      ""
+		"Ability4"                                      ""
+	
+		//Defense
+		//----------------------------------------------------------------
+		"CombatClassDefend"                     "DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"ArmorPhysical"                         "0"
+		"MagicalResistance"                     "0"
+	
+		//Attack
+		//----------------------------------------------------------------
+		"CombatClassAttack"                     "DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"AttackCapabilities"                    "DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"                       "0"
+		"AttackDamageMax"                       "1"
+		"AttackRate"                            "1.700000"
+		"AttackAnimationPoint"                  ""
+		"AttackAcquisitionRange"                "800"
+		"AttackRange"                           "550"
+		"ProjectileModel"                       ""
+		"ProjectileSpeed"                       ""
+	
+		// Attributes
+		//---------------------------------------------------------------
+		"AttributePrimary"                      "DOTA_ATTRIBUTE_INTELLECT"
+		"AttributeBaseStrength"                 "16"
+		"AttributeStrengthGain"                 "2.000000"
+		"AttributeBaseIntelligence"             "22"
+		"AttributeIntelligenceGain"             "2.500000"
+		"AttributeBaseAgility"                  "15"
+		"AttributeAgilityGain"                  "1.700000"
+	
+		//Movement and Collision
+		//---------------------------------------------------------------
+		"MovementCapabilities"                  "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"                         "290"
+		"MovementTurnRate"                      "0.500000"
+		"BoundsHullName"                        "DOTA_HULL_SIZE_HERO"
+		"HasAggressiveStance"                   "0"             // Plays alternate idle/run animation when near enemies
+		"FollowRange"                           "100"           // Distance to keep when following
+	
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                              "0"                   
+		"BountyGoldMin"                         "0"             
+		"BountyGoldMax"                         "0"     
+	
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"          "0"
+		"StatusHealthRegen"     "0.25"
+		"StatusMana"            "0"
+		"StatusManaRegen"       "0" 
+		"StatusStartingMana"	"0" 
+	
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"    "1200"
+		"VisionNighttimeRange"  "800"          
+	
+		//Creature
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"       "1"
+			"AttachWearables"
+			{
+				"Wearable1" { "ItemDef" "0" }
+			}
+		}
+	}
+}

@@ -1,0 +1,85 @@
+"dragon_knight_dragons_blood_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"MaxLevel"						"4"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+	"AbilityTextureName"			"dragon_knight_dragon_blood"
+	//"AOERadius"						"%radius"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+
+	}
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"baseBonusHealthRegen"		"2 4 6 8"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonusArmour"				"2 3 4 5"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"missHealthMutliplier"		"0.075 0.15 0.225 0.3"
+		}
+	}
+
+	"OnSpellStart"
+	{
+
+	}
+
+	"Modifiers"
+	{
+		"modifier_dragons_blood_datadriven"
+		{
+			"Passive"			"1"
+			"IsPurgable"		"0"
+			"IsHidden"			"1"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonusArmour"
+			}
+		}
+
+		"modifier_dragons_blood_heal_datadriven"
+		{
+			"Passive"			"1"
+			"ThinkInterval"		"0.25"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{					
+					"ScriptFile"	"libraries/abilities/heroes/dragon_knight/dragons_blood.lua"
+					"Function"		"dragon_knight_dragons_blood"
+				}
+			}
+		}
+	}	
+}	

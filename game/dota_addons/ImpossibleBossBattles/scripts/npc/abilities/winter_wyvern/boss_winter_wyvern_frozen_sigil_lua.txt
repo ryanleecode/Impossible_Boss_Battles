@@ -1,0 +1,46 @@
+"boss_winter_wyvern_frozen_sigil_lua"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_lua"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"AbilityTextureName"			"tusk_frozen_sigil"
+	"ScriptFile"					"scripts/vscripts/libraries/abilities/heroes/winter_wyvern_boss/boss_winter_wyvern_frozen_sigil_lua.lua"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"model"						"models/heroes/tuskarr/tuskarr_sigil.vmdl"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"0"
+	"AbilityCastPoint"				"0.01"
+	"AbilityChannelTime"  			"0.8"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"0.0"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					""
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0.0"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"iDistance"				"150" 			//variable distance to spawn from the caster
+		}
+	}
+
+}

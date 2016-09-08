@@ -1,0 +1,94 @@
+"boss_winter_wyvern_ice_blast_lua"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_lua"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"AbilityTextureName"			"ancient_apparition_ice_blast"
+	"ScriptFile"					"scripts/vscripts/libraries/abilities/heroes/winter_wyvern_boss/boss_winter_wyvern_ice_blast_lua.lua"
+
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"					"particles/units/heroes/hero_ancient_apparition/ancient_ice_vortex.vpcf"
+		"particle"					"particles/econ/items/ancient_apparition/aa_blast_ti_5/ancient_apparition_ice_blast_sphere_ti5.vpcf"
+		"particle"					"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_explode.vpcf"
+		"particle"					"particles/custom/oscillating_rings.vpcf"
+		"particle"					"particles/status_fx/status_effect_iceblast.vpcf"
+		"particle"					"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_death.vpcf"
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_winter_wyvern.vsndevts"
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts"
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"0"
+	"AbilityCastPoint"				"0.01"
+	"AbilityChannelTime"  			"5.0"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"0"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					""
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"auraRadius"			"2500"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"vortexRadius"			"300"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damage"				"333.34"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"playbackRate"			"1.0"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"thinkInterval"			"1.0"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damagePerTick"			"66.67"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"debuffDuration"		"6.0"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"baseKillThreshold"		"5.0"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"ThresholdIncrement"	"1.0"
+		}
+	}
+}

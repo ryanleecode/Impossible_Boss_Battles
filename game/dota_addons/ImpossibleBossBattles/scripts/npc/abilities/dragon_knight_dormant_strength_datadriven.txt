@@ -1,0 +1,198 @@
+"dragon_knight_dormant_strength_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityTextureName"			"sven_gods_strength"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"150"
+	"AbilityCastPoint"				"0.5"
+	"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+	"AnimationPlaybackRate" 		"1.0"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"60"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0.0"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"3.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damageMultiplier"		"0.01 0.02 0.03 0.04"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"maxAttacks"			"8"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"ASBonus"				"390"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"selfDamageMultiplier"	"0.45"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"BAT"					"1.2"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"baseSelfDamageMutliplier"	"0.015"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"baseDamageReduction"	"-10"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"debuffDuration"		"3"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifiers_dormant_strength_stack_datadriven"
+			"Target" 		"CASTER"
+			"Duration"		"%duration"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifiers_dormant_strength_stack_datadriven"
+		{
+			"IsBuff"				"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"scripts/vscripts/libraries/abilities/heroes/dragon_knight/dormant_strength.lua"		
+					"Function"			"dormant_strength_init"
+					"modifier"			"modifiers_dormant_strength_stack_datadriven"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifiers_dormant_strength_attack_speed_datadriven"
+					"Target" 		"CASTER"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifiers_dormant_strength_attack_speed_datadriven"
+					"Target" 		"CASTER"
+				}
+			}
+
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/libraries/abilities/heroes/dragon_knight/dormant_strength.lua"
+					"Function"		"dormant_strength_stack"
+					"modifier"		"modifiers_dormant_strength_stack_datadriven"
+					"debuff"		"modifiers_dormant_strength_damage_reduction_stacks_counter_datadriven"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifiers_dormant_strength_damage_reduction_stacks_datadriven"
+					"Target" 		"TARGET"
+				}
+			}
+		}
+
+		"modifiers_dormant_strength_attack_speed_datadriven"
+		{
+			"IsHidden"		"0"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%ASBonus"
+				"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"	"%BAT"
+			}
+		}
+
+		"modifiers_dormant_strength_damage_reduction_stacks_counter_datadriven"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"0"
+			"IsDebuff"			"1"
+			"IsPurgable"		"0"
+		}
+
+		"modifiers_dormant_strength_damage_reduction_stacks_datadriven"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"1"
+			"IsPurgable"		"0"
+			"Duration"			"%debuffDuration"
+
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%baseDamageReduction"
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/libraries/abilities/heroes/dragon_knight/dormant_strength.lua"
+					"Function"		"debuffDestroyed"
+					"debuff"		"modifiers_dormant_strength_damage_reduction_stacks_counter_datadriven"
+					"Target"		"TARGET"
+				}
+			}
+		}
+	}
+}
