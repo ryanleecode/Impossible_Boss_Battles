@@ -13,13 +13,13 @@
 *.vcss_c
 
 # Commit panorama compiled textures
-!game/dota_addons/barebones/panorama/images/*.vtex_c
-!game/dota_addons/barebones/panorama/images/custom_game/*.vtex_c
+!game/dota_addons/ImpossibleBossBattles/panorama/images/*.vtex_c
+!game/dota_addons/ImpossibleBossBattles/panorama/images/custom_game/*.vtex_c
 
 # Map overviews
-content/dota_addons/barebones/materials/overviews/*.vmat
-content/dota_addons/barebones/materials/overviews/*.txt
-game/dota_addons/barebones/resource/overviews/*
+content/dota_addons/ImpossibleBossBattles/materials/overviews/*.vmat
+content/dota_addons/ImpossibleBossBattles/materials/overviews/*.txt
+game/dota_addons/ImpossibleBossBattles/resource/overviews/*
 
 #Github dump
 *.stackdump
