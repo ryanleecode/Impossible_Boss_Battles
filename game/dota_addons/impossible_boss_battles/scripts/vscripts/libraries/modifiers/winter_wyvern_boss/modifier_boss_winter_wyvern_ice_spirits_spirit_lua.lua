@@ -52,17 +52,17 @@ function modifier_boss_winter_wyvern_ice_spirits_spirit_lua:OnCreated( keys )
 	self:GetParent().timeSinceLastAttack = GameRules:GetGameTime() - self.flMinTimeBetweenAttacks
 
 	-- Color Debugging for points and paths. Turn it false later!
-	local bDebug = true
-	local vPathColor = Vector( 0,0,0 ) -- black to draw path
-	local vTargetColor = Vector( 255,0,0 ) -- Red for enemy targets
-	local vIdleColor = Vector( 0,255,0 ) -- Green for moving to idling points
-	local vReturnColor = Vector( 0,0,255 ) -- Blue for the return
-	local vEndColor = Vector( 0,0,0 ) -- Back when returning to the caster to end
-	local flDraw_duration = 3.0
+	self.bDebug = true
+	self.vPathColor = Vector( 0,0,0 ) -- black to draw path
+	self.vTargetColor = Vector( 255,0,0 ) -- Red for enemy targets
+	self.vIdleColor = Vector( 0,255,0 ) -- Green for moving to idling points
+	self.vReturnColor = Vector( 0,0,255 ) -- Blue for the return
+	self.vEndColor = Vector( 0,0,0 ) -- Back when returning to the caster to end
+	self.flDraw_duration = 3.0
 
 	-- Find one target point at random which will be used for the first acquisition.
-	local vPoint = self:GetAbility():GetCaster():GetAbsOrigin() + RandomVector( RandomInt( self.iRadius/2, self.iRadius ) )
-	vPoint.z = GetGroundHeight( vPoint, nil )
+	self:GetParent().vPoint = self:GetAbility():GetCaster():GetAbsOrigin() + RandomVector( RandomInt( self.iRadius/2, self.iRadius ) )
+	self:GetParent().vPoint.z = GetGroundHeight( self:GetParent().vPoint, nil )
 
 
 	-- doesnt like self:GetParent() so using unit variable
@@ -73,14 +73,16 @@ function modifier_boss_winter_wyvern_ice_spirits_spirit_lua:OnCreated( keys )
 		-- Move the unit orientation to adjust the particle
 		self:GetParent():SetForwardVector( ( self:GetParent():GetPhysicsVelocity() ):Normalized() )
 
-		-- Current positionsz
-		local vSource = self:GetAbility():GetCaster():GetAbsOrigin()
+		-- Current positions
+		local self.vSource = self:GetAbility():GetCaster():GetAbsOrigin()
 		local vCurrentPosition = self:GetParent():GetAbsOrigin()
 
 		-- Print the path on Debug mode
-		if bDebug then 
+		if self.bDebug then 
 			DebugDrawCircle( vCurrentPosition, vPathColor, 0, 2, true, flDraw_duration ) 
 		end
+
+		self:GetParent().hEnemies = nil
 
 		-- Use this if skipping frames is needed (--if frameCount == 0 then..)
 		iFrameCount = ( iFrameCount + 1) % 3
@@ -90,7 +92,7 @@ function modifier_boss_winter_wyvern_ice_spirits_spirit_lua:OnCreated( keys )
 
 		-- MOVEMENT	
 		-- Get the direction
-		local vDirection = ( vPoint - self:GetParent():GetAbsOrigin() ):Normalized()
+		local vDirection = ( self:GetParent().vPoint - self:GetParent():GetAbsOrigin() ):Normalized()
         vDirection.z = 0
 
 		-- Calculate the angle difference
@@ -110,15 +112,30 @@ function modifier_boss_winter_wyvern_ice_spirits_spirit_lua:OnCreated( keys )
 		end
 
 		-- COLLISION CHECK
-		local flDistance = ( vPoint - self:GetParent():GetAbsOrigin() ):Length()
+		local flDistance = ( self:GetParent().vPoint - self:GetParent():GetAbsOrigin() ):Length()
 		local bCollision = flDistance < 50
 
 		-- MAX DISTANCE CHECK
-		local flDistanceToCaster = ( vSource - self:GetParent():GetAbsOrigin() ):Length()
+		local flDistanceToCaster = ( self.vSource - self:GetParent():GetAbsOrigin() ):Length()
 		if flDistance > self.iMaxDistance then 
-			self:GetParent():SetAbsOrigin( vSource )
-			self:GetParent().state = "acquiring" 
+			self:GetParent():SetAbsOrigin( self.vSource )
+			self:GetParent().sState = "acquiring" 
 		end
+
+		-- STATE DEPENDENT LOGIC
+		-- Damage, Healing and Targeting are state dependent.
+		-- Update the point in all frames
+
+		-- Acquiring...
+		-- Acquiring -> Target Acquired (enemy or idle point)
+		-- Target Acquired... if collision -> Acquiring or Return
+		-- Return... if collision -> Acquiring
+
+		
+		if self:GetParent().state == "acquiring" then
+			modifier_boss_winter_wyvern_ice_spirits_spirit_lua:AcquiringState( self )
+		end
+
 	end)
 end
 
@@ -138,3 +155,43 @@ function modifier_boss_winter_wyvern_ice_spirits_spirit_lua:CheckState()
 	return hState
 end
 
+--[[Acquiring finds new targets and changes state to target_acquired with a current_target if it finds enemies or nil and a 
+	random point if there are no enemies]]
+function modifier_boss_winter_wyvern_ice_spirits_spirit_lua:AcquiringState( self )
+
+	-- This is to prevent attacking the same target very fast
+	local flTimeBetweenLastAttack = GameRules:GetGameTime() - self:GetParent().timeSinceLastAttack 
+	--print("Time Between Last Attack: "..flTimeBetweenLastAttack)
+
+	-- If enough time has passed since the last attack, attempt to acquire an enemy
+	if flTimeBetweenLastAttack >= self.flMinTimeBetweenAttacks then
+		-- If the unit doesn't have a target locked, find enemies near the caster
+		self:GetParent().hEnemies = FindEnemiesInRadius( self:GetParent(), self.iRadius )
+
+		local hTargetEnemy = self:GetParent().hEnemies[ RandomInt( 1, #self:GetParent().hEnemies ) ]
+
+		-- Keep track of it, set the state to target_acquired
+		if hTargetEnemy then
+			self:GetParent().sState = "target_acquired"
+			self:GetParent().hCurrentTarget = hTargetEnemy
+			self:GetParent().vPoint = self:GetParent().hCurrentTarget:GetAbsOrigin()
+			print( "Acquiring -> Enemy Target acquired: "..self:GetParent().hCurrentTarget:GetUnitName() )
+		else 
+			self:GetParent().sState = "target_acquired"
+			self:GetParent().hCurrentTarget = nil
+			self:GetParent().bIdling = true
+			self:GetParent().vPoint = self.vSource + RandomVector( RandomInt( self.iRadius / 2, self.iRadius ) )
+			self:GetParent().vPoint.z = GetGroundHeight( self:GetParent().vPoint, nil )
+			
+			--print("Acquiring -> Random Point Target acquired")
+			if self.Debug then 
+				DebugDrawCircle( self:GetParent().vPoint, self.vIdleColor, 100, 25, true, self.flDraw_duration ) 
+			end
+		end
+
+	else
+
+		
+	end
+
+end
