@@ -13,6 +13,13 @@ function modifier_boss_winter_wyvern_ice_spirits_spirit_lua:OnCreated( keys )
 	self.flMinTimeBetweenAttacks = self:GetAbility():GetLevelSpecialValueFor( "minTimeBetweenAttacks", self:GetAbility():GetLevel() - 1 )
 	self.iRadius = self:GetAbility():GetLevelSpecialValueFor( "radius", self:GetAbility():GetLevel() - 1 )
 	self.iMaxDistance = self:GetAbility():GetLevelSpecialValueFor( "maxDistance", self:GetAbility():GetLevel() - 1 )
+	self.iGiveUpDistance = self:GetAbility():GetLevelSpecialValueFor( "giveUpDistance", self:GetAbility():GetLevel() - 1 )
+
+	self.iMinDamage = self:GetAbility():GetLevelSpecialValueFor( "minDamage", self:GetAbility():GetLevel() - 1 )
+	self.iMaxDamage = self:GetAbility():GetLevelSpecialValueFor( "maxDamage", self:GetAbility():GetLevel() - 1 )
+
+	self.pParticleDamage = "particles/units/heroes/hero_death_prophet/death_prophet_exorcism_attack.vpcf"
+	self.pParticleDamageBuilding = "particles/units/heroes/hero_death_prophet/death_prophet_exorcism_attack_building.vpcf"
 
 	local pSpiritGlow = ParticleManager:CreateParticle( "particles/units/heroes/hero_death_prophet/death_prophet_spirit_glow.vpcf", PATTACH_ABSORIGIN_FOLLOW, 
 						self:GetParent() )
@@ -49,7 +56,7 @@ function modifier_boss_winter_wyvern_ice_spirits_spirit_lua:OnCreated( keys )
 	self:GetParent().flDamageDone = 0
 
 	-- Store the interval between attacks, starting at min_time_between_attacks
-	self:GetParent().timeSinceLastAttack = GameRules:GetGameTime() - self.flMinTimeBetweenAttacks
+	self:GetParent().lastArrackTime = GameRules:GetGameTime() - self.flMinTimeBetweenAttacks
 
 	-- Color Debugging for points and paths. Turn it false later!
 	self.bDebug = true
@@ -113,10 +120,10 @@ function modifier_boss_winter_wyvern_ice_spirits_spirit_lua:OnCreated( keys )
 
 		-- COLLISION CHECK
 		local flDistance = ( self:GetParent().vPoint - self:GetParent():GetAbsOrigin() ):Length()
-		local bCollision = flDistance < 50
+		self:GetParent().bCollision = flDistance < 50
 
 		-- MAX DISTANCE CHECK
-		local flDistanceToCaster = ( self.vSource - self:GetParent():GetAbsOrigin() ):Length()
+		self:GetParent().flDistanceToCaster = ( self.vSource - self:GetParent():GetAbsOrigin() ):Length()
 		if flDistance > self.iMaxDistance then 
 			self:GetParent():SetAbsOrigin( self.vSource )
 			self:GetParent().sState = "acquiring" 
@@ -132,8 +139,12 @@ function modifier_boss_winter_wyvern_ice_spirits_spirit_lua:OnCreated( keys )
 		-- Return... if collision -> Acquiring
 
 		
-		if self:GetParent().state == "acquiring" then
+		if self:GetParent().sState == "acquiring" then
 			modifier_boss_winter_wyvern_ice_spirits_spirit_lua:AcquiringState( self )
+		else if self:GetParent().sState == "target_acquired" then
+			modifier_boss_winter_wyvern_ice_spirits_spirit_lua:AcquiredState( self )
+		elseif self:GetParent().state == "returning" then
+			modifier_boss_winter_wyvern_ice_spirits_spirit_lua:ReturningState( self )
 		end
 
 	end)
@@ -160,7 +171,7 @@ end
 function modifier_boss_winter_wyvern_ice_spirits_spirit_lua:AcquiringState( self )
 
 	-- This is to prevent attacking the same target very fast
-	local flTimeBetweenLastAttack = GameRules:GetGameTime() - self:GetParent().timeSinceLastAttack 
+	local flTimeBetweenLastAttack = GameRules:GetGameTime() - self:GetParent().lastArrackTime 
 	--print("Time Between Last Attack: "..flTimeBetweenLastAttack)
 
 	-- If enough time has passed since the last attack, attempt to acquire an enemy
@@ -189,9 +200,114 @@ function modifier_boss_winter_wyvern_ice_spirits_spirit_lua:AcquiringState( self
 			end
 		end
 
+	-- not enough time since the last attack, get a random point
 	else
-
+		self:GetParent().sState = "target_acquired"
+		self:GetParent().hCurrentTarget = nil
+		self:GetParent().bIdling = true
+		self:GetParent().vPoint = self.vSource + RandomVector( RandomInt( self.iRadius / 2, self.iRadius ) )
+		self:GetParent().vPoint.z = GetGroundHeight( self:GetParent().vPoint, nil )
 		
+		print("Waiting for attack time. Acquiring -> Random Point Target acquired")
+		if self.Debug then 
+			DebugDrawCircle( self:GetParent().vPoint, self.vIdleColor, 100, 25, true, self.flDraw_duration ) 
+		end
+	end
+end
+
+-- If the state was to follow a target enemy, it means the unit can perform an attack.
+function modifier_boss_winter_wyvern_ice_spirits_spirit_lua:AcquiredState( self )
+	-- Update the point of the target's current position
+	if self:GetParent().hCurrentTarget then
+		self:GetParent().vPoint = self:GetParent().hCurrentTarget:GetAbsOrigin()
+		if self.Debug then 
+			DebugDrawCircle( self:GetParent().vPoint, self.vTargetColor, 100, 25, true, self.flDraw_duration ) 
+		end
 	end
 
+	-- Give up on the target if the distance goes over the give_up_distance
+	if self:GetParent().flDistanceToCaster  > self.iGiveUpDistance then
+		self:GetParent().sState = "acquiring"
+		--print("Gave up on the target, acquiring a new target.")
+
+	end
+
+	-- Do physical damage here, and increase hit counter. 
+	if self:GetParent().bCollision then
+
+		-- If the target was an enemy and not a point, the unit collided with it
+		if self:GetParent().hCurrentTarget ~= nil then
+			
+			-- Damage, units will still try to collide with attack immune targets but the damage wont be applied
+			if not self:GetParent().hCurrentTarget:IsAttackImmune() then
+				local iDamage =  damage = RandomInt( self.iMinDamage, self.iMaxDamage )
+				local hDamageTable = 
+				{
+					victim = self:GetParent().hCurrentTarget,
+					attacker = self:GetAbility():GetCaster()
+					damage_type = DAMAGE_TYPE_PURE
+					damage = iDamage
+				}
+
+				ApplyDamage( hDamageTable )
+
+				-- Calculate how much physical damage was dealt
+				--[[local targetArmor = self:GetParent().hCurrentTarget:GetPhysicalArmorValue()
+				local damageReduction = ((0.06 * targetArmor) / (1 + 0.06 * targetArmor))
+				local damagePostReduction = spirit_damage * (1 - damageReduction)]]
+
+				self:GetParent().flDamageDone = self:GetParent().flDamageDone + iDamage
+
+				-- Damage particle, different for buildings
+				if self:GetParent().hCurrentTarget:IsBuilding() then
+					local particle = ParticleManager:CreateParticle( self.pParticleDamageBuilding, PATTACH_ABSORIGIN, self:GetParent().hCurrentTarget )
+					ParticleManager:SetParticleControl(particle, 0, self:GetParent().hCurrentTarget:GetAbsOrigin() )
+					ParticleManager:SetParticleControlEnt(particle, 1, unit.current_target, PATTACH_POINT_FOLLOW, "attach_hitloc", unit.current_target:GetAbsOrigin(), true)
+				elseif unit.damage_done > 0 then
+					local particle = ParticleManager:CreateParticle( self.pParticleDamage, PATTACH_ABSORIGIN, self:GetParent().hCurrentTarget )
+					ParticleManager:SetParticleControl(particle, 0, self:GetParent().hCurrentTarget:GetAbsOrigin())
+					ParticleManager:SetParticleControlEnt(particle, 1, self:GetParent().hCurrentTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent().hCurrentTarget:GetAbsOrigin(), true)
+				end
+
+				-- Increase the numberOfHits for this unit
+				self:GetParent().iNumberOfHits = self:GetParent().numberOfHits + 1 
+
+				-- Fire Sound on the target unit
+				self:GetParent().hCurrentTarget:EmitSound("Hero_DeathProphet.Exorcism.Damage")
+				
+				-- Set to return
+				self:GetParent().sState = "returning"
+				self:GetParent().vPoint = self.vSource
+				--print("Returning to caster after dealing ",unit.damage_done)
+
+				-- Update the attack time of the unit.
+				self:GetParent().lastArrackTime = GameRules:GetGameTime()
+				--unit.enemy_collision = true
+
+			end
+
+		-- In other case, its a point, reacquire target or return to the caster (50/50)
+		else
+			if RollPercentage(50) then
+				self:GetParent().sState = "acquiring"
+				--print("Attempting to acquire a new target")
+			else
+				self:GetParent().sState = "returning"
+				self:GetParent().vPoint = self.vSource
+				--print("Returning to caster after idling")
+			end
+		end
+	end
+end
+
+function modifier_boss_winter_wyvern_ice_spirits_spirit_lua:ReturningState( self )
+	-- Update the point to the caster's current position
+	self:GetParent().vPoint = self.vSource
+	if self.bDebug then 
+		DebugDrawCircle( self:GetParent().vPoint, self.vReturnColor, 100, 25, true, self.flDrawDuration ) 
+	end
+
+	if self:GetParent().bCollision then 
+		self:GetParent().sState = "acquiring"
+	end	
 end
