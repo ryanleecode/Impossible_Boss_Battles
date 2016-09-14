@@ -19,6 +19,7 @@ end
 
 function boss_winter_wyvern_ice_blast_lua:OnSpellStart()
 	if not IsServer() then return end
+	
 	if not self:GetCaster():HasModifier( "modifier_boss_winter_wyvern_ice_blast_lua" ) then
 		self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_boss_winter_wyvern_ice_blast_lua", {} )
 	end

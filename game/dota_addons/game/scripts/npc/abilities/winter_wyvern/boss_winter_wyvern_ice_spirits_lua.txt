@@ -15,6 +15,9 @@
 		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
 		"particle"					"particles/units/heroes/hero_death_prophet/death_prophet_spirit_glow.vpcf"
 		"particle"					"particles/units/heroes/hero_death_prophet/death_prophet_spirit_model.vpcf"
+		"particle"					"particles/units/heroes/hero_death_prophet/death_prophet_exorcism_attack.vpcf"
+		"particle"					"particles/units/heroes/hero_death_prophet/death_prophet_exorcism_attack_building.vpcf"
+		"particle"					"particles/generic_gameplay/generic_manaburn.vpcf"
 	}
 
 	// Casting
@@ -43,12 +46,12 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"numberOfSpirits"		"12"		
+			"numberOfSpirits"		"24"		
 		}
 		"03"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"delayBetweenSpirits"	"0.25"
+			"delayBetweenSpirits"	"0.20"
 		}
 		"04"
 		{
@@ -58,22 +61,57 @@
 		"05"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"spiritSpeed"			"600"
+			"spiritSpeed"			"550"
 		}
 		"06"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"minTimeBetweenAttacks"	"3.0"
+			"minTimeBetweenAttacks"	"2.5"
 		}
 		"07"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"radius"				"1000"
+			"radius"				"750"
 		}
-		"07"
+		"08"
 		{
 			"var_type"				"FIELD_INTEGER"
 			"maxDistance"			"2100"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"giveUpDistance"		"2100"
+		}
+		"10"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"minDamage"				"20"
+		}
+		"11"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"maxDamage"				"30"
+		}
+		"12"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"averageDamage"			"55"
+		}
+		"13"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"healPercent"			"25 25 25"
+		}
+		"14"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damagePerBurn"			"0.45"	
+		}
+		"15"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"manaPerHit"			"32"	
 		}
 	}
 

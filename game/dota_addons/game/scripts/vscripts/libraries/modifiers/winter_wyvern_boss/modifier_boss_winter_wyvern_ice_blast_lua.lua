@@ -30,7 +30,7 @@ function modifier_boss_winter_wyvern_ice_blast_lua:OnCreated( keys )
 
 	local tEnemies = FindEnemiesInRadius( self:GetParent(), self.iAuraRadius, nil )
 	for _,hEnemy in pairs( tEnemies ) do
-		hEnemy:AddNewModifier( self:GetParent(), self:GetAbility(), "modifier_boss_winter_wyvern_ice_blast_enemy_lua", {} )
+		hEnemy:AddNewModifier( self:GetParent(), self:GetAbility(), "modifier_boss_winter_wyvern_ice_blast_enemy_lua", { duration = self.flDebuffDuration } )
 	end
 
 	EmitSoundOnLocationWithCaster( self:GetParent():GetAbsOrigin(), "Hero_Winter_Wyvern.WintersCurse.Cast", self:GetParent() )

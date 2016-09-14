@@ -93,7 +93,10 @@ end
 --------------------------------------------------------------------------------
 
 function modifier_boss_winter_wyvern_ice_blast_enemy_lua:OnTakeDamage( keys )
-	if not IsServer() then return end
+	if not ( IsServer() or keys.unit == self:GetParent() ) then return end
+
+	print( "Attacker: "..keys.attacker:GetName() or keys.attacker:GetUnitName().." "..keys.attacker:GetEntityIndex() )
+	print( "Victim: "..keys.unit:GetName() or keys.unit:GetUnitName().." "..keys.unit:GetEntityIndex() )
 
 	local flCurrentPercentageHealth = self:GetParent():GetHealth() / self:GetParent():GetMaxHealth() * 100.0
 

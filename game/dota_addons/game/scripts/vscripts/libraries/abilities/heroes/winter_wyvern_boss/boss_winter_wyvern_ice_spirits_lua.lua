@@ -25,15 +25,23 @@ end
 
 function boss_winter_wyvern_ice_spirits_lua:OnSpellStart()
 	if not IsServer() then return end
+
+	self.iDuration = self:GetLevelSpecialValueFor( "duration", self:GetLevel() - 1 )
+	
+	EmitSoundOn( "Hero_DeathProphet.Exorcism.Cast", self:GetCaster() )
+
 	if not self:GetCaster():HasModifier( "modifier_boss_winter_wyvern_ice_spirits_lua" ) then
-		self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_boss_winter_wyvern_ice_spirits_lua", {} )
+		self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_boss_winter_wyvern_ice_spirits_lua", {duration = self.iDuration } )
+	else
+		self:GetCaster():RemoveModifierByName( "modifier_boss_winter_wyvern_ice_spirits_lua" )
+		self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_boss_winter_wyvern_ice_spirits_lua", {duration = self.iDuration } )
 	end
 end
 
 --------------------------------------------------------------------------------
 
 function boss_winter_wyvern_ice_spirits_lua:OnChannelFinish( bInterrupted )
-	self:GetCaster():RemoveModifierByName( "modifier_boss_winter_wyvern_ice_spirits_lua" )
+	--self:GetCaster():RemoveModifierByName( "modifier_boss_winter_wyvern_ice_spirits_lua" )
 	if not IsServer() or bInterrupted then
 		return 
 	end

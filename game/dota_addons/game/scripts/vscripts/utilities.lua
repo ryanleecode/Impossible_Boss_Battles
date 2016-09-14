@@ -200,3 +200,12 @@ function TimeToRandomSeed()
     local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '^0+','')
     math.randomseed(tonumber(timeTxt))
 end
+
+function BoolToString( input )
+    assert( input == true or input == false, "input must be a boolean value" )
+    if input == true then
+        return "true"
+    else
+        return "false"
+    end
+end

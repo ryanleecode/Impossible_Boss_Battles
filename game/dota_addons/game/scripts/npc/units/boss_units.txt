@@ -121,11 +121,11 @@
 	//Graphics
 	//----------------------------------------------------------------
 	"Model"                                     "models/heroes/winterwyvern/winterwyvern.vmdl"      
-	"ModelScale"                                "1.000000"      
+	"ModelScale"                                "1.5"      
 	"Portrait"                                  ""
 	"IdleExpression"                            "scenes/winter_wyvern/winter_wyvern_exp_idle_01.vcd"
 	"HealthBarOffset"                           "190"
-	"RingRadius"                                "70"
+	"RingRadius"                                "105"
 
 	//Sound
 	//----------------------------------------------------------------
@@ -137,12 +137,12 @@
 
 	// Abilities
 	//----------------------------------------------------------------
-	"AbilityLayout"              					"6"													
-	"Ability1"                                    	"boss_winter_wyvern_frozen_sigil_lua"
+	"AbilityLayout"              					"6"														
+	"Ability1"                                    	"boss_winter_wyvern_ice_spirits_lua"
 	"Ability2"                                      "boss_winter_wyvern_splinter_blast_lua"
 	"Ability3"                                      "boss_winter_wyvern_ice_shards_lua"
 	"Ability4"                                     	"boss_winter_wyvern_ice_blast_lua"
-	"Ability5"             							"boss_winter_wyvern_ice_spirits_lua"
+	"Ability5"             							"boss_winter_wyvern_frozen_sigil_lua"
 	"Ability6"                                      ""
 
 	//Defense
@@ -191,7 +191,7 @@
 	"MovementCapabilities"                  "DOTA_UNIT_CAP_MOVE_GROUND"
 	"MovementSpeed"                         "300"
 	"MovementTurnRate"                      "0.400000"
-	"BoundsHullName"                        "DOTA_HULL_SIZE_HERO"
+	"BoundsHullName"                        "DOTA_HULL_SIZE_HUGE"
 	"HasAggressiveStance"                   "0"             // Plays alternate idle/run animation when near enemies
 	"FollowRange"                           "100"           // Distance to keep when following
 
@@ -203,7 +203,7 @@
 
 	// Status
 	//----------------------------------------------------------------
-	"StatusHealth"          "1000"
+	"StatusHealth"          "10000"
 	"StatusHealthRegen"     "0.0"
 	"StatusMana"            "0"
 	"StatusManaRegen"       "0.0" 

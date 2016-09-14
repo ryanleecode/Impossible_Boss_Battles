@@ -322,11 +322,12 @@ function ExorcismPhysics( event )
 			point = source
 			if Debug then DebugDrawCircle(point, endColor, 100, 25, true, 2) end
 
+			print( collision )
 			-- Last collision ends the unit
 			if collision then 
 
 				-- Heal is calculated as: a percentage of the units average attack damage multiplied by the amount of attacks the spirit did.
-				local heal_done =  unit.numberOfHits * average_damage* heal_percent
+				local heal_done =  unit.numberOfHits * average_damage * heal_percent
 				caster:Heal(heal_done, ability)
 				caster:EmitSound("Hero_DeathProphet.Exorcism.Heal")
 				--print("Healed ",heal_done)
